@@ -1,0 +1,34 @@
+scalar GraphQLPrice
+
+enum CategoryType {
+  Shirts
+  Jeans
+  Jackets
+  Sweaters
+  Accessories
+}
+
+type Product {
+  id: Int!
+  category: CategoryType!
+  name: String!
+  image: String
+  price: GraphQLPrice
+}
+
+input ProductInputs {
+  category: CategoryType
+  name: String!
+  image: String
+  price: GraphQLPrice
+}
+
+##### Top level declarations
+type Query {
+  about: String!
+  productsList: [Product!]!
+}
+type Mutation {
+  setAboutMessage(message: String!): String
+  productsAdd(product: ProductInputs!): Product!
+}
