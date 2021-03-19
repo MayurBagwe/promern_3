@@ -22,10 +22,18 @@ function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) ===
 
 function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
 
-function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(Reflect.construct(Date, [], function () {})); return true; } catch (e) { return false; } }
+function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
 
 function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
 
+/* eslint "react/react-in-jsx-scope": "off" */
+
+/* globals React ReactDOM */
+
+/* eslint "react/jsx-no-undef": "off" */
+
+/* eslint "no-alert": "off" */
+// eslint-disable-next-line react/prefer-stateless-function
 var AppHeader = /*#__PURE__*/function (_React$Component) {
   _inherits(AppHeader, _React$Component);
 
@@ -42,14 +50,15 @@ var AppHeader = /*#__PURE__*/function (_React$Component) {
     value: function render() {
       return /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("h1", null, "My Company Inventory"), /*#__PURE__*/React.createElement("h3", {
         style: {
-          color: "red"
+          color: 'red'
         }
       }, "Showing all available products"), /*#__PURE__*/React.createElement("hr", null));
     }
   }]);
 
   return AppHeader;
-}(React.Component);
+}(React.Component); // eslint-disable-next-line react/prefer-stateless-function
+
 
 var ProductTable = /*#__PURE__*/function (_React$Component2) {
   _inherits(ProductTable, _React$Component2);
@@ -66,11 +75,12 @@ var ProductTable = /*#__PURE__*/function (_React$Component2) {
     key: "render",
     value: function render() {
       var rowStyle = {
-        border: "2px solid silver",
+        border: '2px solid silver',
         padding: 4,
-        backgroundColor: " #d9d9d9"
+        backgroundColor: ' #d9d9d9'
       };
-      var productRow = this.props.products.map(function (product) {
+      var products = this.props.products;
+      var productRow = products.map(function (product) {
         return /*#__PURE__*/React.createElement(ProductRow, {
           key: product.id,
           rowStyle: rowStyle,
@@ -79,7 +89,7 @@ var ProductTable = /*#__PURE__*/function (_React$Component2) {
       });
       return /*#__PURE__*/React.createElement("table", {
         style: {
-          borderCollapse: "collapse"
+          borderCollapse: 'collapse'
         }
       }, /*#__PURE__*/React.createElement("thead", null, /*#__PURE__*/React.createElement("tr", null, /*#__PURE__*/React.createElement("th", {
         style: rowStyle
@@ -94,7 +104,8 @@ var ProductTable = /*#__PURE__*/function (_React$Component2) {
   }]);
 
   return ProductTable;
-}(React.Component);
+}(React.Component); // eslint-disable-next-line react/prefer-stateless-function
+
 
 var ProductRow = /*#__PURE__*/function (_React$Component3) {
   _inherits(ProductRow, _React$Component3);
@@ -111,21 +122,23 @@ var ProductRow = /*#__PURE__*/function (_React$Component3) {
     key: "render",
     value: function render() {
       var rowStyle = {
-        border: "2px solid silver",
+        border: '2px solid silver',
         padding: 4
       };
-      var display$ = "$" + this.props.productObj.price;
+      var productObj = this.props.productObj;
+      var display$ = "$ ".concat(productObj.price);
       return /*#__PURE__*/React.createElement("tr", null, /*#__PURE__*/React.createElement("td", {
         style: rowStyle
-      }, this.props.productObj.name), /*#__PURE__*/React.createElement("td", {
+      }, productObj.name), /*#__PURE__*/React.createElement("td", {
         style: rowStyle
       }, display$), /*#__PURE__*/React.createElement("td", {
         style: rowStyle
-      }, this.props.productObj.category), /*#__PURE__*/React.createElement("td", {
+      }, productObj.category), /*#__PURE__*/React.createElement("td", {
         style: rowStyle
       }, /*#__PURE__*/React.createElement("a", {
+        rel: "noreferrer",
         target: "_blank",
-        href: this.props.productObj.image
+        href: productObj.image
       }, "View")));
     }
   }]);
@@ -143,10 +156,10 @@ var AddProduct = /*#__PURE__*/function (_React$Component4) {
 
     _classCallCheck(this, AddProduct);
 
-    console.log("Add prod constructor");
+    // console.log('Add prod constructor');
     _this = _super4.call(this);
     _this.state = {
-      value: "$"
+      value: '$'
     };
     _this.handleChange = _this.handleChange.bind(_assertThisInitialized(_this));
     _this.handleSubmit = _this.handleSubmit.bind(_assertThisInitialized(_this));
@@ -171,16 +184,18 @@ var AddProduct = /*#__PURE__*/function (_React$Component4) {
         name: form.productName.value,
         image: form.imageURL.value
       };
-      this.props.addProduct(product);
-      form.price.value = "";
-      form.productName.value = "";
-      form.imageURL.value = "";
-      form.category.value = "";
-      this.state.value = "$";
+      var addProduct = this.props.addProduct;
+      addProduct(product);
+      form.price.value = '';
+      form.productName.value = '';
+      form.imageURL.value = '';
+      form.category.value = '';
+      this.state.value = '$';
     }
   }, {
     key: "render",
     value: function render() {
+      var value = this.state.value;
       return /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("form", {
         name: "productAdd",
         onSubmit: this.handleSubmit
@@ -188,34 +203,34 @@ var AddProduct = /*#__PURE__*/function (_React$Component4) {
         className: "formStyle"
       }, /*#__PURE__*/React.createElement("label", {
         htmlFor: "category"
-      }, "Category"), /*#__PURE__*/React.createElement("br", null), /*#__PURE__*/React.createElement("select", {
+      }, "Category", /*#__PURE__*/React.createElement("br", null), /*#__PURE__*/React.createElement("select", {
         name: "category"
-      }, /*#__PURE__*/React.createElement("option", null, "Shirts"), /*#__PURE__*/React.createElement("option", null, "Jeans"), /*#__PURE__*/React.createElement("option", null, "Jackets"), /*#__PURE__*/React.createElement("option", null, "Sweaters"), /*#__PURE__*/React.createElement("option", null, "Accessories"))), /*#__PURE__*/React.createElement("div", {
+      }, /*#__PURE__*/React.createElement("option", null, "Shirts"), /*#__PURE__*/React.createElement("option", null, "Jeans"), /*#__PURE__*/React.createElement("option", null, "Jackets"), /*#__PURE__*/React.createElement("option", null, "Sweaters"), /*#__PURE__*/React.createElement("option", null, "Accessories")))), /*#__PURE__*/React.createElement("div", {
         className: "formStyle"
       }, /*#__PURE__*/React.createElement("label", {
         htmlFor: "price"
-      }, "Price Per Unit"), /*#__PURE__*/React.createElement("br", null), /*#__PURE__*/React.createElement("input", {
+      }, "Price Per Unit", /*#__PURE__*/React.createElement("br", null), /*#__PURE__*/React.createElement("input", {
         type: "text",
         name: "price",
-        value: this.state.value,
+        value: value,
         onChange: this.handleChange
-      })), /*#__PURE__*/React.createElement("div", {
+      }))), /*#__PURE__*/React.createElement("div", {
         className: "formStyle"
       }, /*#__PURE__*/React.createElement("label", {
         htmlFor: "productname"
-      }, "ProductName"), /*#__PURE__*/React.createElement("br", null), /*#__PURE__*/React.createElement("input", {
+      }, "ProductName", /*#__PURE__*/React.createElement("br", null), /*#__PURE__*/React.createElement("input", {
         type: "text",
         name: "productName",
         id: "product"
-      })), /*#__PURE__*/React.createElement("div", {
+      }))), /*#__PURE__*/React.createElement("div", {
         className: "formStyle"
       }, /*#__PURE__*/React.createElement("label", {
         htmlFor: "image"
-      }, "Image Url"), /*#__PURE__*/React.createElement("br", null), /*#__PURE__*/React.createElement("input", {
+      }, "Image Url", /*#__PURE__*/React.createElement("br", null), /*#__PURE__*/React.createElement("input", {
         type: "text",
         name: "imageURL",
         id: "imageURL"
-      })), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("label", {
+      }))), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("label", {
         htmlFor: "addProduct"
       }, /*#__PURE__*/React.createElement("input", {
         type: "submit",
@@ -246,10 +261,10 @@ function _graphQLFetch() {
             variables = _args3.length > 1 && _args3[1] !== undefined ? _args3[1] : {};
             _context3.prev = 1;
             _context3.next = 4;
-            return fetch("/graphql", {
-              method: "POST",
+            return fetch(window.ENV.UI_API_ENDPOINT, {
+              method: 'POST',
               headers: {
-                "Content-Type": "application/json"
+                'Content-Type': 'application/json'
               },
               body: JSON.stringify({
                 query: query,
@@ -268,8 +283,8 @@ function _graphQLFetch() {
             if (result.errors) {
               error = result.errors[0];
 
-              if (error.extensions.code == "BAD_USER_INPUT") {
-                details = error.extensions.exception.errors.join("\n ");
+              if (error.extensions.code === 'BAD_USER_INPUT') {
+                details = error.extensions.exception.errors.join('\n ');
                 alert("".concat(error.message, ":\n ").concat(details));
               } else {
                 alert("".concat(error.extensions.code, ": ").concat(error.message));
@@ -282,8 +297,9 @@ function _graphQLFetch() {
             _context3.prev = 12;
             _context3.t0 = _context3["catch"](1);
             alert("Error in sending data to server: ".concat(_context3.t0.message));
+            return _context3.abrupt("return", null);
 
-          case 15:
+          case 16:
           case "end":
             return _context3.stop();
         }
@@ -303,7 +319,7 @@ var ProductList = /*#__PURE__*/function (_React$Component5) {
 
     _classCallCheck(this, ProductList);
 
-    console.log("Prod list constructor executed");
+    //  console.log('Prod list constructor executed');
     _this2 = _super5.call(this);
     _this2.state = {
       products: []
@@ -335,7 +351,7 @@ var ProductList = /*#__PURE__*/function (_React$Component5) {
                 data = _context.sent;
 
                 if (data) {
-                  console.log("Final data ", data);
+                  //    console.log('Final data ', data);
                   this.setState({
                     products: data.productsList
                   });
@@ -394,14 +410,15 @@ var ProductList = /*#__PURE__*/function (_React$Component5) {
   }, {
     key: "render",
     value: function render() {
+      var products = this.state.products;
       return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement(AppHeader, null), /*#__PURE__*/React.createElement(ProductTable, {
-        products: this.state.products
+        products: products
       }), /*#__PURE__*/React.createElement("hr", null), /*#__PURE__*/React.createElement("h3", {
         style: {
-          color: "red"
+          color: 'red'
         }
       }, "Add a new product to inventory"), /*#__PURE__*/React.createElement(AddProduct, {
-        addProduct: this.addProduct.bind(this)
+        addProduct: this.addProduct
       }));
     }
   }]);
@@ -410,4 +427,4 @@ var ProductList = /*#__PURE__*/function (_React$Component5) {
 }(React.Component);
 
 var element = /*#__PURE__*/React.createElement(ProductList, null);
-ReactDOM.render(element, document.getElementById("root"));
+ReactDOM.render(element, document.getElementById('root'));

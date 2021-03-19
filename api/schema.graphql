@@ -9,6 +9,7 @@ enum CategoryType {
 }
 
 type Product {
+  _id: ID!
   id: Int!
   category: CategoryType!
   name: String!

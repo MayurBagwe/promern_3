@@ -1,0 +1,36 @@
+{
+  "name": "react-app-ui",
+  "version": "1.0.0",
+  "description": "React App UI ",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon -w uiserver.js -w .env uiserver.js",
+    "compile": "babel src --out-dir public",
+    "lint": "eslint . --fix --ext jsx --ignore-pattern public",
+    "watch": "babel src --out-dir public --watch --verbose"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MayurBagwe/promern_4.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^6.2.0",
+    "express": "^4.16.4",
+    "http-proxy-middleware": "^0.21.0",
+    "nodemon": "^1.18.9"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.12.10",
+    "@babel/core": "^7.12.10",
+    "@babel/preset-env": "^7.12.11",
+    "@babel/preset-react": "^7.12.10",
+    "babel-eslint": "^10.1.0",
+    "eslint": "^5.16.0",
+    "eslint-config-airbnb": "^17.1.1",
+    "eslint-plugin-import": "^2.22.1",
+    "eslint-plugin-jsx-a11y": "^6.4.1",
+    "eslint-plugin-react": "^7.22.0"
+  }
+}

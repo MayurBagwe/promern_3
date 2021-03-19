@@ -1,32 +1,39 @@
+/* eslint "react/react-in-jsx-scope": "off" */
+/* globals React ReactDOM */
+/* eslint "react/jsx-no-undef": "off" */
+/* eslint "no-alert": "off" */
+
+// eslint-disable-next-line react/prefer-stateless-function
 class AppHeader extends React.Component {
   render() {
     return (
       <div>
         <h1>My Company Inventory</h1>
-        <h3 style={{ color: "red" }}>Showing all available products</h3>
+        <h3 style={{ color: 'red' }}>Showing all available products</h3>
         <hr />
       </div>
     );
   }
 }
 
+// eslint-disable-next-line react/prefer-stateless-function
 class ProductTable extends React.Component {
   render() {
     const rowStyle = {
-      border: "2px solid silver",
+      border: '2px solid silver',
       padding: 4,
-      backgroundColor: " #d9d9d9",
+      backgroundColor: ' #d9d9d9',
     };
-
-    const productRow = this.props.products.map((product) => (
+    const { products } = this.props;
+    const productRow = products.map(product => (
       <ProductRow
         key={product.id}
         rowStyle={rowStyle}
         productObj={product}
-      ></ProductRow>
+      />
     ));
     return (
-      <table style={{ borderCollapse: "collapse" }}>
+      <table style={{ borderCollapse: 'collapse' }}>
         <thead>
           <tr>
             <th style={rowStyle}>Product Name</th>
@@ -41,21 +48,22 @@ class ProductTable extends React.Component {
   }
 }
 
+// eslint-disable-next-line react/prefer-stateless-function
 class ProductRow extends React.Component {
   render() {
     const rowStyle = {
-      border: "2px solid silver",
+      border: '2px solid silver',
       padding: 4,
     };
-
-    const display$ = "$" + this.props.productObj.price;
+    const { productObj } = this.props;
+    const display$ = `$ ${productObj.price}`;
     return (
       <tr>
-        <td style={rowStyle}>{this.props.productObj.name}</td>
+        <td style={rowStyle}>{productObj.name}</td>
         <td style={rowStyle}>{display$}</td>
-        <td style={rowStyle}>{this.props.productObj.category}</td>
+        <td style={rowStyle}>{productObj.category}</td>
         <td style={rowStyle}>
-          <a target="_blank" href={this.props.productObj.image}>
+          <a rel="noreferrer" target="_blank" href={productObj.image}>
             View
           </a>
         </td>
@@ -66,9 +74,9 @@ class ProductRow extends React.Component {
 
 class AddProduct extends React.Component {
   constructor() {
-    console.log("Add prod constructor");
+    // console.log('Add prod constructor');
     super();
-    this.state = { value: "$" };
+    this.state = { value: '$' };
 
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -88,52 +96,62 @@ class AddProduct extends React.Component {
       name: form.productName.value,
       image: form.imageURL.value,
     };
-
-    this.props.addProduct(product);
-    form.price.value = "";
-    form.productName.value = "";
-    form.imageURL.value = "";
-    form.category.value = "";
-    this.state.value = "$";
+    const { addProduct } = this.props;
+    addProduct(product);
+    form.price.value = '';
+    form.productName.value = '';
+    form.imageURL.value = '';
+    form.category.value = '';
+    this.state.value = '$';
   }
 
   render() {
+    const { value } = this.state;
     return (
+
       <div>
         <form name="productAdd" onSubmit={this.handleSubmit}>
           <div className="formStyle">
-            <label htmlFor="category">Category</label>
-            <br />
-            <select name="category">
-              <option>Shirts</option>
-              <option>Jeans</option>
-              <option>Jackets</option>
-              <option>Sweaters</option>
-              <option>Accessories</option>
-            </select>
+            <label htmlFor="category">
+              Category
+              <br />
+              <select name="category">
+                <option>Shirts</option>
+                <option>Jeans</option>
+                <option>Jackets</option>
+                <option>Sweaters</option>
+                <option>Accessories</option>
+              </select>
+            </label>
           </div>
           <div className="formStyle">
-            <label htmlFor="price">Price Per Unit</label>
-            <br />
+            <label htmlFor="price">
+              Price Per Unit
+              <br />
 
-            <input
-              type="text"
-              name="price"
-              value={this.state.value}
-              onChange={this.handleChange}
-            />
+              <input
+                type="text"
+                name="price"
+                value={value}
+                onChange={this.handleChange}
+              />
+            </label>
           </div>
 
           <div className="formStyle">
-            <label htmlFor="productname">ProductName</label>
-            <br />
+            <label htmlFor="productname">
+              ProductName
+              <br />
 
-            <input type="text" name="productName" id="product" />
+              <input type="text" name="productName" id="product" />
+            </label>
           </div>
           <div className="formStyle">
-            <label htmlFor="image">Image Url</label>
-            <br />
-            <input type="text" name="imageURL" id="imageURL" />
+            <label htmlFor="image">
+              Image Url
+              <br />
+              <input type="text" name="imageURL" id="imageURL" />
+            </label>
           </div>
           <div>
             <label htmlFor="addProduct">
@@ -148,17 +166,17 @@ class AddProduct extends React.Component {
 
 async function graphQLFetch(query, variables = {}) {
   try {
-    const response = await fetch("/graphql", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
+    const response = await fetch(window.ENV.UI_API_ENDPOINT, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ query, variables }),
     });
     const result = await response.json();
 
     if (result.errors) {
       const error = result.errors[0];
-      if (error.extensions.code == "BAD_USER_INPUT") {
-        const details = error.extensions.exception.errors.join("\n ");
+      if (error.extensions.code === 'BAD_USER_INPUT') {
+        const details = error.extensions.exception.errors.join('\n ');
         alert(`${error.message}:\n ${details}`);
       } else {
         alert(`${error.extensions.code}: ${error.message}`);
@@ -167,12 +185,13 @@ async function graphQLFetch(query, variables = {}) {
     return result.data;
   } catch (e) {
     alert(`Error in sending data to server: ${e.message}`);
+    return null;
   }
 }
 
 class ProductList extends React.Component {
   constructor() {
-    console.log("Prod list constructor executed");
+  //  console.log('Prod list constructor executed');
     super();
     this.state = {
       products: [],
@@ -195,7 +214,7 @@ class ProductList extends React.Component {
 
     const data = await graphQLFetch(query);
     if (data) {
-      console.log("Final data ", data);
+      //    console.log('Final data ', data);
       this.setState({ products: data.productsList });
     }
   }
@@ -212,18 +231,20 @@ class ProductList extends React.Component {
       this.loadData();
     }
   }
+
   render() {
+    const { products } = this.state;
     return (
       <React.Fragment>
         <AppHeader />
-        <ProductTable products={this.state.products} />
+        <ProductTable products={products} />
         <hr />
-        <h3 style={{ color: "red" }}>Add a new product to inventory</h3>
-        <AddProduct addProduct={this.addProduct.bind(this)} />
+        <h3 style={{ color: 'red' }}>Add a new product to inventory</h3>
+        <AddProduct addProduct={this.addProduct} />
       </React.Fragment>
     );
   }
 }
 const element = <ProductList />;
 
-ReactDOM.render(element, document.getElementById("root"));
+ReactDOM.render(element, document.getElementById('root'));

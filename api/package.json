@@ -1,26 +1,33 @@
 {
-  "name": "react-app",
+  "name": "react-app-api",
   "version": "1.0.0",
-  "description": "React Intro App ",
+  "description": "React App APIs",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon --watch server -e js,graphql server/server.js",
-    "compile": "babel src --out-dir public",
-    "watch": "babel src --out-dir public --watch --verbose"
+    "lint": "eslint .",
+    "start": "nodemon -e js,graphql -w . -w .env server.js"
   },
-  "author": "",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MayurBagwe/promern_4.git"
+  },
+  "author": "mayur.bagwe@gmail.com",
   "license": "ISC",
   "dependencies": {
     "apollo-server-express": "^2.21.0",
+    "dotenv": "^6.2.0",
     "express": "^4.16.4",
-    "graphql": "^0.13.2"
+    "graphql": "^0.13.2",
+    "mongodb": "^3.6.4",
+    "nodemon": "^1.18.9"
   },
   "devDependencies": {
     "@babel/cli": "^7.12.10",
     "@babel/core": "^7.12.10",
     "@babel/preset-env": "^7.12.11",
     "@babel/preset-react": "^7.12.10",
+    "eslint-config-airbnb-base": "^13.2.0",
     "nodemon": "^1.19.4",
     "npm-watch": "^0.7.0",
     "webpack-dev-server": "^3.11.2"
